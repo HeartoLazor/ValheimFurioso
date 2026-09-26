@@ -1,0 +1,10 @@
+{
+    "name": "ValheimVoiceChat",
+    "version_number": "2.0.1",
+    "website_url": "https://www.nexusmods.com/valheim/mods/3718",
+    "description": "Nexus ValheimVoiceChat. Add a proximity voice chat to valheim.",
+    "dependencies": [
+		"denikson-BepInExPack_Valheim-5.4.2350"
+        "ValheimModding-Jotunn-2.30.2"
+    ]
+}

@@ -1,0 +1,7 @@
+- 1.5.12: update for 0.221.10
+- 1.5.9: update for bog witch
+- 1.5.8: fixed swapped music/ambient folders
+- 1.5.7: now first loads audios in plugins/CustomAudio, then looks for and loads in plugins/<modfolder>/CustomAudio
+- 1.5.6: readme cleanup
+- 1.5.5: now correctly looks for the CustomAudio folder in BepInEx\plugins, rather than where the .dll is located
+- 1.5.4: initial release

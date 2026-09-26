@@ -1,0 +1,10 @@
+{
+  "name": "ValheimSFXBeavisAndGoblin",
+  "version_number": "1.0.0",
+  "description": "This mod improves ENORMOUSLY the game EXPERIENCE. Replaces the goblin sounds with beavis and butt-head ones.",
+  "website_url": "https://github.com/HeartoLazor",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2351",
+    "aruberuto-CustomAudio_LocationMusic-1.5.12"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "CustomAudio_LocationMusic",
+  "version_number": "1.5.12",
+  "website_url": "",
+  "description": "Fork of the original CustomAudio by aedenthorn, allowing for the substitution of location music.",
+  "dependencies": [
+    "denikson-BepInExPack_Valheim-5.4.2105"
+]
+}
