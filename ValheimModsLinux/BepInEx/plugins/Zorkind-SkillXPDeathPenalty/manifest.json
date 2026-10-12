@@ -1,0 +1,8 @@
+{
+    "name": "SkillXPDeathPenalty",
+    "version_number": "1.0.0",
+    "website_url": "https://www.nexusmods.com/valheim/mods/3928?tab=description",
+    "description": "Nexus SkillXPDeathPenalty. Replaces Valheim's skill level loss on death with a reset of the XP accumulated toward the next skill level.",
+    "dependencies": [
+    ]
+}

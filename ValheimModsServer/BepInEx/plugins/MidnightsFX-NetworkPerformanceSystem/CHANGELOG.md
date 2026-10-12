@@ -1,5 +1,78 @@
 # Changelog
 
+**1.17.0**
+- Digging and other changes to the ground now reach whoever owns that ground, instead of sometimes being lost
+- Players with the mod now wait for the host of a game-hosted world whose game stops while backgrounded
+- Other players' map icons now jump straight to where they went after a portal trip instead of sliding there for up to a minute.
+- Map icons of nearby players follow them live, and the server passes on everyone else's moves right away instead of every few seconds.
+- Slow players whose frame rate does not depend on their creatures updates see less creature ownership thrashing
+
+**1.16.0**
+- Drifting ice, floating logs and dropped items in water send far fewer updates, freeing room on everyone's connection in fights by the sea and when sailing through ice.
+- The server now raises how fast it sends to players, and how fast players with the mod may upload, while their connections are full, and backs off on its own when the server's line or a player's connection cannot keep up.
+- A player whose upload fills up in a big fight, so their creatures stall for everyone else, is given fewer creatures to run, and the rest move to players whose uploads have room.
+
+**1.15.1**
+- A struggling player who is the only one near creatures keeps running them.
+- Players who alt-tab have their own idle timeout rate (objects are still moved away from an idle player within 10s)
+
+**1.15.0**
+- Players with the mod now tell the server how smoothly their game is running.
+- A player whose game slows down in a big fight is given fewer creatures to run, and the rest move to players with room to spare.
+- Network monitoring and nps_stats show each player's frame rate and creature allowance.
+- Damage numbers are only sent to players close enough to see them.
+- New option to send damage numbers only to the player who landed the hit, or not at all.
+- Status effects that last a while are re-sent to other players' creatures far less often (instead of 4x per second)
+
+**1.14.0**
+- Players who are still joining and loading the world now get a separate, longer allowance before they are dropped, so the in-world timeout can be kept short.
+- A player whose game or connection dies is now sent back to the menu and freed from the server sooner, instead of sitting in a frozen world.
+- Network monitoring now shows when the same objects are being sent over and over.
+- The server no longer resends the world's list of past players to everyone every few seconds when nothing in it has changed, freeing a large share of its upload.
+- Buildings, trees and rocks are no longer re-sent to nearby players when nothing they could see about them changed, leaving room for creatures.
+	- Hits, repairs and removals on buildings, trees and rocks now reach whoever owns them.
+- Busy servers with many players now send world updates to each player more often.
+
+**1.13.0**
+- A ship's chest no longer closes on a passenger while someone else is steering.
+- Fish, seagulls and crows send far fewer updates, freeing upload for players near water.
+- Creatures no longer bounce between players when the one fighting them steps back a little.
+- Network monitoring no longer reports creatures standing still as stalls.
+
+**1.12.0**
+- Fixes a flood of status effect messages that could fill a player's connection and stop the world loading for others.
+- Logs which status effect and player are responsible when such a flood happens.
+- Ping is now measured for players whose connection is wrapped by another mod.
+- Network monitoring records how each player's connection is read.
+
+**1.11.1**
+- Compatibility improvements for ZenMods
+- Fixes tamed animals falling out of raised pens
+	- Server-side, and works for players without the mod. `nps_stats` gains an "in order" line in the Ownership block.
+
+**1.11.0**
+- Improved send/recieve rate management
+- When a player's upload is full, the creatures they are fighting now go out ahead of everything else they are simulating, right after players and ships.
+- Quiet Idle Creatures now also skips a standing creature's turns of under a degree.
+- Network monitoring now records what each player's connection carries, message by message, in both directions: the game's own messages, each mod's messages by name, and the kinds of objects in world updates. While monitoring is on, `nps_stats` shows the latest totals for each player.
+	- This allows diagnosing noisy mods, or mods that flood the connection stream
+- Ore, fuel, food and ammo put into a station are no longer lost when the server cannot deliver them to the station's owner. The item is dropped at the station instead, for the player to pick up and put in again.
+	- A request made the moment a player reaches a station, before the server has seen them arrive, now waits up to 3 seconds for them and goes in as normal.
+	- Covers smelters and everything built like them (kiln, blast furnace, windmill, spinning wheel, eitr refinery), fermenters, cooking stations and ovens, fires and torches, and ballistas. A shield generator's fuel is covered when it takes only one kind.
+	- Server-side, and works for players without the mod. `nps_stats` gains "parked" and "handed back" lines in the "Station requests" block.
+- A cooking station item added by another mod without taking the station first is no longer put in twice.
+
+**1.10.0**
+- Pets following a player, and creatures summoned with a staff, now stay on that player's machine instead of being moved to whoever has the lowest ping. New `Ownership` setting **Followers Stay With Their Player** (default on).
+- Players on the same local network as the server now have their ping measured. Steam reports them at 0 ms, which was read as "no measurement", so they were treated as 150 ms and kept losing creatures to players further away.
+- Network monitoring now records how each creature died: what killed it, the damage types, where it was, and whether it had just changed owner.
+- A player standing on the edge between two areas no longer makes the server hand every object in the next area over back and forth each time they step - over a thousand at a time in a built-up base, each one re-sent to everyone nearby. Objects now stay with a player while that player still has them loaded. New `Ownership` setting **Keep Objects While Loaded** (default on).
+- Loss backoff stops sooner for a player whose packet loss is not caused by the send rate. Once their rate is below what their connection was already carrying, and their loss has not improved, they go straight back to full speed. Before, they were slowed all the way to the floor first, and their updates queued for up to a fifth of a second on the way.
+- A network outage at the server no longer makes loss backoff slow down players whose connections were fine.
+- Idle creatures, tamed animals in pens especially, no longer re-send themselves many times a second for movements too small to see. A player looking after a few dozen of them could spend their whole upload on it, and everyone nearby had to download all of it. New `Creature Updates` setting **Quiet Idle Creatures** (default on). It works on each player's game that has the mod, using the server's setting.
+- The server now sends a creature that has settled down to each player at most 10 times a second (5 beyond 32 m), and one moving more than 64 m away at most 15 times a second, instead of on every update. This also reduces what players without the mod cost everyone else. New `Creature Updates` setting **Pace Creature Sends** (default on).
+- Network monitoring now records additional details
+
 **1.9.0**
 - Creatures no longer get stuck with a player who walked away and came back.
 - Fixed objects outside the normal world area changing owner several times every two seconds.
