@@ -276,6 +276,9 @@ what is recorded, so they run on every side.
   debug logging.
 - **Fix Container Log Spam** *(both)* — redirects the four log lines written on every chest open,
   stack-all and take-all to debug logging.
+- **Fix Container Grid Alignment** *(client)* — resets the container grid's alignment and scroll position
+  when you open a different chest, so a standard chest opened after a larger one is centered instead of
+  keeping the larger one's top-aligned, scrolled layout.
 - **Fix Item Icon Crash** *(client)* — draws the first icon for an item whose stored icon variant is
   out of range instead of throwing from every UI panel.
 - **Fix Negative Stamina** *(client)* — floors player stamina at zero (`NaN` included), repairs a
@@ -300,11 +303,13 @@ what is recorded, so they run on every side.
   anyone wakes or kills a boss; vanilla closes an open map on every world key change. It still closes
   for a player with a boss within `Map Auto-Close Boss Range` (default 100 m, the boss health bar
   range).
-- **Fix Biome Sector Lookup** *(both)* — makes the biome sector lookup agree with the actual biome near
+- **Fix Biome Sector Lookup** *(both)* — makes the player's biome agree with the actual biome near
   borders. Vanilla reads its 12 m biome grid rounded down, so within about 12 m of a border the player's
-  biome, weather, spawn levels, the map's biome name and terrain coloring follow the neighbouring biome,
-  and a `GetBiome error` warning is logged every second. Location placement keeps vanilla's lookup, so
-  seeds still place locations where unmodded Valheim does.
+  biome, weather, spawn levels and the map's biome name follow the neighbouring biome, and a
+  `GetBiome error` warning is logged every second. Terrain coloring, vegetation and location placement
+  keep vanilla's lookup, so land generates and looks the same with or without the fix. Before 0.36.1
+  terrain coloring used the corrected lookup too, which could repaint land near a border away from the
+  vegetation already growing on it.
 - **Fix Loading Screen Hang** *(both)* — unregisters a networked object that was destroyed without the
   game's object manager being told, so a dungeon exit, portal trip or respawn next to it can finish
   loading. Vanilla leaves one behind on your client each time another player opens an Infested Mine
@@ -480,6 +485,7 @@ The mods involved:
 | Fix Projectile Rotation Spam | ComfyMods — BetterZeeLog | The same fix |
 | Fix Send Failure Log Spam | ComfyMods — BetterZeeLog | The defect; that mod removes the call, this one redirects it |
 | Fix Container Log Spam | ComfyMods — BetterZeeLog | The defect; that mod removes the calls, this one redirects them |
+| Fix Container Grid Alignment | Dreamwraith | Contributed the fix ([#19](https://github.com/MidnightsFX/Valheim-Community-Patch/pull/19)) |
 | Fix Item Icon Crash | ComfyMods — LetMePlay | The defect; a smaller fix here that leaves the shared item data alone |
 | Fix Negative Stamina | MidnightsFX | — |
 | Fix Teleport Ghost Players | MidnightsFX | — |
@@ -628,14 +634,13 @@ ground being pushed up out of it. While HearthBelow is installed, both fixes sta
 once in the log with *"HearthBelow is loaded, so '...' stands down"*. Grass placement and the ground
 check then run as they do in the game, with HearthBelow's changes applied.
 
-<<<<<<< HEAD
 Known overlap: **Valheim Performance Overhaul** replaces each smoke puff's update with its own, as Fix
 Smoke Overhead does. Before 0.34.2 both ran on every puff, so smoke aged twice as fast and rose in
 shorter columns. Fix Smoke Overhead now leaves a puff's update to a mod that has already replaced it,
 and says so once in the log with *"Smoke puff updates are replaced by ..."*. Its smoke rendering
 change stays on. With Valheim Performance Overhaul's smoke option off, this mod's version applies as
 before.
-=======
+
 ## API for other mods
 
 Where another mod would change the same game code as one of these fixes, it can usually work through
@@ -652,7 +657,6 @@ It lets a mod:
 
 See the [API documentation](https://github.com/MidnightsFX/Valheim-Community-Patch/tree/master/ValheimCommunityPatch.API)
 for setup and examples.
->>>>>>> 627750499451898a6f567cd4335b66f340e81eee
 
 ## Reporting a bug
 
@@ -666,3 +670,9 @@ To decide whether a fix belongs here, the test is:
 - Does it address a significant performance problem (eg 2-5x slowdown)
 
 If it does not meet these criteria, it will not be accepted. This mod is purely bug and performance fixes.
+
+---
+
+If you enjoy my mods donations are appreciated. My mods will never be paid and donations are not required.
+
+<a href="https://ko-fi.com/midnightsfx"><img height="36" src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Support me on Ko-fi"></a>
